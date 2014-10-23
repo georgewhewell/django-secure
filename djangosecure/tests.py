@@ -82,7 +82,7 @@ class SecurityMiddlewareTest(TestCase):
         """
         response = HttpResponse()
         response._frame_deny_exempt = True
-        response = self.middleware.process_response("not used", response)
+        response = self.middleware.process_response(self.request.get('/'), response)
         self.assertFalse("x-frame-options" in response)
 
 
