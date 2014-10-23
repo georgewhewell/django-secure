@@ -103,9 +103,13 @@ class SecurityMiddlewareTest(TestCase):
         "strict-transport-security: max-age=3600" to the response.
 
         """
+        if settings.SECURE_HSTS_INCLUDE_SUBDOMAINS:
+            sts_header = 'max-age=3600; includeSubDomains'
+        else:
+            sts_header = 'max-age=3600;'
         self.assertEqual(
             self.process_response(secure=True)["strict-transport-security"],
-            "max-age=3600")
+            sts_header)
 
 
     @override_settings(SECURE_HSTS_SECONDS=3600)
